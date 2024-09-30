@@ -1,0 +1,13 @@
+<div class="field">
+  <label class="label">Solicitar unirse a <%= @actividad.titulo %> </label>
+</div>
+
+<form action=nueva_solicitud method="post">
+    <textarea maxlength=100 class="textarea" placeholder="Mensaje (max 100 caracteres)" name=message>Me gustaría unirme a tu actividad!</textarea>
+    <button type="submit", class="button is-dark">Solicitar unirse</button>
+    <input type="hidden" name="actividad_id" value=<%= @actividad.id %>>
+    <input type="hidden" name="usuario_id" value=<%= @usuario.id%>>
+    <input type="hidden" name="status" value="sent">
+</form>
+
+

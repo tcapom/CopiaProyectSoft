@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+bueno:
+  titulo: Buena Actividad
+  valor: 12345
+  descripcion: Esta es una buena actividad con una buena descripcion ouuuu yeahhh
+
+nadie_pertenece:
+  titulo: Nadie pertenece
+  valor: 9191
+  descripcion : Nadie pertenece
+
+archivada:
+  titulo: Actividad Archivada
+  valor: 8291
+  descripcion: Esta actividad debería estar archivada
+  archivado: true

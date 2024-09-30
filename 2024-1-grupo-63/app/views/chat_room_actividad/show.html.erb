@@ -1,0 +1,79 @@
+
+<h1 class="title is-1">Chat de <%= @chat_room_actividad.name %></h1>
+
+<style>
+  /* Ocultar el menú desplegable por defecto */
+  .dropdown-menu {
+    display: none;
+  }
+
+  /* Mostrar el menú desplegable al pasar el ratón sobre el botón */
+  .dropdown:hover .dropdown-menu {
+    display: block;
+  }
+</style>
+
+<div class="dropdown">
+  <div class="dropdown-trigger">
+    <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
+      <span>Ver participantes</span>
+      <span class="icon is-small">
+        <i class="fas fa-angle-down" aria-hidden="true"></i>
+      </span>
+    </button>
+
+  </div>
+  <div class="dropdown-menu" id="dropdown-menu" role="menu">
+    <div class="dropdown-content">
+      <% @actividad.users.each do |user| %>
+        <a href="#" class="dropdown-item"><%= user.email %></a>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+
+<div class="columns">
+  <div class="column is-three-quarters">
+    <div id="messages">
+      <% @actividad_messages.each do |message| %>
+        <div class="box">
+          <article class="media">
+            <div class="media-content">
+              <div class="content">
+                <p>
+                  <strong><%= message.user.email %></strong>
+                  <small><%= time_ago_in_words(message.created_at) %> ago</small>
+                  <br />
+                  <%= message.content %>
+                </p>
+              </div>
+            </div>
+          </article>
+        </div>
+      <% end %>
+    </div>
+    
+
+    <form id="new_message" action=<%= chat_room_actividad_path %> method="post">
+      <label for="message_content">Mensaje</label>
+        <textarea maxlength=10000 class="textarea" placeholder="Mensaje (max 1000 caracteres)" name=message></textarea>
+      <br>
+      <div class="actions">
+        <button type="submit", class="button is-primary">Enviar mensaje</button>
+      </div>
+    </form>
+    </div>
+</div>
+
+<script>
+  function fetchMessages() {
+    fetch('<%= chat_room_actividad_messages_path(id: @actividad.id, chat_room_actividad_id: @chat_room_actividad.id) %>')
+      .then(response => response.text())
+      .then(html => {
+        document.getElementById('messages').innerHTML = html;
+      });
+  }
+
+  setInterval(fetchMessages, 3000);
+</script>

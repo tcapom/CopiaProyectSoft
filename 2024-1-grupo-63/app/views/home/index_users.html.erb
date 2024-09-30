@@ -1,0 +1,58 @@
+<form action="<%= usuarios_path %>" method="GET">
+<div class="field is-grouped">
+<p class="control has-icons-left" style="margin-left: 10px;">
+<input class="input" type="text" name="search" value="<%=params[:search]%>" placeholder="Buscar por correo">
+<span class="icon is-left">
+<i class="fas fa-search" aria-hidden="true"></i>
+</span>
+<p class="control" >
+<button type="submit" class="button is-primary">Buscar</button>
+</p>
+</p>
+</div>
+</form>
+
+<table class="table is-striped" style="height:25%; width:100%;">
+<thead>
+<tr>
+<tr>
+<th>Ver perfil</th>
+<th>Email</th>
+</tr>
+</thead>
+
+<tbody>
+    
+<% @users.each do |user| %>
+<% if user.email != "taylorswift@grupo63.grupo63"%>
+<tr>
+
+<td>
+<figure class="image is-64x64" >
+<a href="<%= ver_perfil_path(user.id) %>">
+
+<% if AdditionalTable.find_by(user_id: user.id).picture.attached? %>
+      <%= image_tag url_for( AdditionalTable.find_by(user_id: user.id).picture) %>
+    <% else %>
+      <p>No hay imagen adjunta</p>
+    <% end %>
+</a>
+</figure>
+</td>
+
+<td>
+<%= user.email %>
+</td>
+
+</tr>
+<% end %>
+<% end %>
+</tbody>
+</table>
+
+
+
+
+
+
+

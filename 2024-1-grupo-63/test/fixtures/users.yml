@@ -1,0 +1,51 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# This model initially had no columns defined. If you add columns to the
+# model remove the "{}" from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+
+
+#Hice que los mails hicieran referencia a las solicitudes que tienen
+bueno:
+  email: PerteneceAActividadYEsAdmin@uc.cl
+  encrypted_password: <%= Devise::Encryptor.digest(User,'password') %>
+  created_at: <%= Time.now %>
+  updated_at: <%= Time.now %>
+
+bueno2:
+  email: PerteneceAActividadYNoEsAdmin@uc.cl
+  encrypted_password: <%= Devise::Encryptor.digest(User,'password') %>
+  created_at: <%= Time.now %>
+  updated_at: <%= Time.now %>
+
+bueno3:
+  email: HaMandadoUnaSolicitud@uc.cl
+  encrypted_password: <%= Devise::Encryptor.digest(User,'password') %>
+  created_at: <%= Time.now %>
+  updated_at: <%= Time.now %>
+
+bueno4:
+  email: NoHaMandaduUnaSolicitud@uc.cl
+  encrypted_password: <%= Devise::Encryptor.digest(User,'password') %>
+  created_at: <%= Time.now %>
+  updated_at: <%= Time.now %>
+
+mutuals1:
+  email: mutuals1@uc.cl
+  encrypted_password: <%= Devise::Encryptor.digest(User,'password') %>
+  created_at: <%= Time.now %>
+  updated_at: <%= Time.now %>
+
+mutuals2:
+  email: mutuals2@uc.cl
+  encrypted_password: <%= Devise::Encryptor.digest(User,'password') %>
+  created_at: <%= Time.now %>
+  updated_at: <%= Time.now %>
+
+admin:
+  email: admin@admin
+  global_admin: true
+  encrypted_password: <%= Devise::Encryptor.digest(User,'password') %>
+  created_at: <%= Time.now %>
+  updated_at: <%= Time.now %>

@@ -1,0 +1,26 @@
+<!-- app/views/chat_rooms/new.html.erb -->
+<h1>Nuevo Chat</h1>
+
+<%= form_with(model: @chat_room, local: true) do |form| %>
+  
+  <div class="field">
+   
+    <%= form.text_field :name, class: "input is-medium", placeholder: "Nombre del Chat" %>
+</div>
+
+  <div class="field">
+    <%= form.label :user_ids, 'Añadir usuarios' %><br>
+    <div class="checkbox-group">
+      <% User.where.not(id: current_user.id).each do |user| %>
+        <div>
+          <%= check_box_tag 'chat_room[user_ids][]', user.id %>
+          <%= label_tag "chat_room_user_ids_#{user.id}", user.email %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="actions">
+    <%= form.submit "Crear Chat", class: 'button is-primary' %>
+</div>
+
+<% end %>

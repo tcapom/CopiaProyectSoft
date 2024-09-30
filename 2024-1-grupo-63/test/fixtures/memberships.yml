@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+membership_1:
+  actividad: bueno
+  user: bueno
+  admin: true
+
+membership_2:
+  actividad: bueno
+  user: bueno2
+  admin: false

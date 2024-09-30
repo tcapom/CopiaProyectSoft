@@ -1,0 +1,38 @@
+<h><strong>Miembros: </strong> </h>
+<div class="fixed-grid">
+  <div class="grid">
+
+    <div class="cell">
+    <% if @admin_actividad %>
+    <%= User.find_by(id: @admin_actividad.id).email %>
+    <text class="has-text-primary">(Admin)</text>
+  <% else %>
+    <p></p>
+  <% end %>
+    
+    </div>  
+
+    <div class="cell">
+    </div> 
+
+    <% @actividad.users.each do |usuario| %>
+      
+    <% if !@actividad.memberships.find_by(user_id: usuario.id).admin %>
+    <div class="cell">
+    <%= usuario.email %>
+    </div>
+
+    <div class="cell">
+    <% if current_user.id ==  @admin_actividad.id%>
+    <% if usuario.id != @admin_actividad.id %>
+    <form action=ver_miembros method="delete" data-turbolinks="false">
+    <button class="button is-danger" type="submit" name="usuario_id" value=<%=usuario.id%>> ELIMINAR </button>
+    <input type="hidden" name="accepted" value=false>
+    </form>
+    <% end %>
+    <% end %>
+    </div>
+    <% end %>
+    <% end %>
+</div>
+</div>

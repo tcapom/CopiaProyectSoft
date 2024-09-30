@@ -1,0 +1,216 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS (and SCSS, if configured) file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+ @import "https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css";
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  html {
+    height: 100%;
+  }
+
+  body {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    font-family: Arial, sans-serif;
+  }
+
+  .yield_content {
+    flex: 1;
+  }
+
+ .table {
+  height:50%;
+  width:100%;
+ }
+
+ .icon {
+  font-family: 'Font Awesome 5 Free';
+}
+
+ .imagen-container {
+    max-width: 30px; /* Define el ancho máximo deseado para la imagen */
+    max-height: 30px; /* Define la altura máxima deseada para la imagen */
+    overflow: hidden; /* Oculta cualquier parte de la imagen que se desborde del contenedor */
+}
+
+ .imagen-container img {
+    width: 100%; /* Ajusta el ancho de la imagen al ancho del contenedor */
+    height: auto; /* Permite que la altura se ajuste automáticamente para mantener la proporción original */
+    display: block; /* Asegura que la imagen se muestre como un bloque dentro del contenedor */
+}
+
+/* Estilos para la barra horizontal */
+ .separator-bar {
+    height: 1px; /* Altura de la barra */
+    background-color: #000000; /* Color de la barra */
+    margin-bottom: 20px; /* Margen inferior para separar del contenido */
+  }
+
+  .footer {
+    background-color: #b9d6e3;
+    color: #000000;
+    padding: 20px 0;
+    width: 100%;
+    bottom: 0;
+  }
+  .navbar {
+    background-color: #b9d6e3;
+    color: #000000;
+  }
+
+  hr.rounded {
+    border-top: 8px solid #333;
+    border-radius: 5px;
+  }
+  
+  hr.solid {
+    border-top: 3px solid #333;
+  }
+
+  .tab {
+    tab-size: 4;
+}
+  .yellow-text {
+    color: yellow;
+  }
+
+  .imagen-actividad {
+    text-align: center; /* Centra el contenido horizontalmente */
+}
+  .imagen-actividad img {
+    display: inline-block; 
+    max-width: 100%; 
+    height: auto; 
+}
+
+.star-rating-container {
+  display: flex;
+  justify-content: center; /* Centra horizontalmente el contenido */
+  margin-bottom: 10px; /* Añade un margen inferior para separación */
+}
+
+.star-rating {
+  display: flex;
+  flex-direction: row-reverse; /* Invierte el orden de las estrellas */
+  justify-content: flex-start; /* Alinea las estrellas al inicio del contenedor */
+  font-size: 2em;
+}
+
+.star-rating input[type="radio"] {
+  display: none; /* Oculta los radios */
+}
+
+.star-rating label {
+  color: #ccc; /* Color gris para las estrellas no seleccionadas */
+  cursor: pointer;
+}
+
+/* Cambia el color de las estrellas cuando están seleccionadas o se pasa el mouse sobre ellas */
+.star-rating label:hover,
+.star-rating label:hover ~ label,
+.star-rating input[type="radio"]:checked ~ label {
+  color: #f5c518; /* Amarillo */
+}
+
+/* Mantiene las estrellas anteriores pintadas cuando se selecciona una */
+.star-rating input[type="radio"]:checked ~ label,
+.star-rating input[type="radio"]:checked ~ label ~ label,
+.star-rating input[type="radio"]:checked ~ label ~ label ~ label,
+.star-rating input[type="radio"]:checked ~ label ~ label ~ label ~ label {
+  color: #f5c518; /* Amarillo */
+}
+
+/* Estilos adicionales para el formulario */
+.field {
+  margin-bottom: 20px;
+}
+
+.label {
+  font-weight: bold;
+}
+
+.textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.actions {
+  display: flex;
+  justify-content: center; /* Centra el botón de submit */
+}
+
+.actions input[type="submit"] {
+  background-color: #4CAF50; /* Color de fondo */
+  color: white; /* Color del texto */
+  padding: 10px 20px; /* Espaciado interno */
+  border: none; /* Sin borde */
+  border-radius: 4px; /* Bordes redondeados */
+  cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+}
+
+.actions input[type="submit"]:hover {
+  background-color: #45a049; /* Cambia el color de fondo al pasar el mouse */
+}
+
+.big-title {
+  font-size: 48px; /* Adjust the size as needed */
+  font-weight: bold;
+  text-align: center; /* Center the title */
+  margin-top: 50px; /* Add some margin at the top */
+}
+
+.mid-title {
+  font-size: 24px; /* Adjust the size as needed */
+  font-weight: bold;
+  text-align: center; /* Center the title */
+  margin-top: 50px; /* Add some margin at the top */
+}
+
+
+/* stylesheets/custom.css */
+.columns {
+  width: 120%;
+  margin: 0;
+}
+
+.column.is-3 {
+  border-right: 1px solid #ddd;
+  padding-right: 10px;
+}
+
+.column.is-9 {
+  padding-left: 20px;
+}
+.username-container {
+  text-align: center;
+}
+
+.custom-link {
+  text-decoration: none; /* Elimina el subrayado */
+  color: inherit; /* Hereda el color de texto del elemento padre */
+}
+
+.custom-link:hover {
+  /* Opcional: Agrega estilos cuando el enlace es hover (puntero) */
+  text-decoration: none;
+  color: inherit;
+}

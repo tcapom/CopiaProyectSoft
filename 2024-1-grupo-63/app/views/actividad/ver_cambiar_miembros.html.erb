@@ -1,0 +1,11 @@
+<td>
+    <p><strong> Dueño: <%= @admin.email %> </strong><p>
+    <p><strong>Miembros: </strong> </p>
+    <% @actividad.users.each do |usuario| %>
+        <%= usuario.email %>
+    <% if @actividad.memberships.find_by(user_id: usuario.id).admin %>
+         <text class=has-text-primary>(Admin)</text>
+    <% end %>
+    <br>
+    <% end %>
+</td>

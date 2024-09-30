@@ -1,0 +1,40 @@
+
+
+<div class="buttons" style="display: flex; justify-content: center;">
+  <%= link_to 'Nuevo chat', new_chat_room_path, class: 'button is-primary is-light' %>
+</div>
+
+<br><br>
+
+
+
+<article class="panel is-link">
+  <p class="panel-heading">Tus Chats</p>
+  <p class="panel-tabs">
+    <a class="is-active">All</a>
+  </p>
+  
+  <div class="panel-block">
+    <p class="control has-icons-left">
+      <input class="input is-link" type="text" placeholder="Search" />
+      <span class="icon is-left">
+        <i class="fas fa-search" aria-hidden="true"></i>
+      </span>
+    </p>
+  </div>
+  <ul>
+    <% @chat_rooms.each do |chat_room| %>
+        <li>
+            <a class="panel-block" href="<%= chat_room_path(chat_room) %>">
+                <span class="panel-icon">
+                    <i class="fas fa-book" aria-hidden="true"></i>
+                </span>
+                <%= chat_room.name %>
+            </a>
+        </li>
+    <% end %>
+</ul>
+
+
+
+</article>

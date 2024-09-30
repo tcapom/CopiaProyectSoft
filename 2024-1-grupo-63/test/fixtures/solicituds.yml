@@ -1,0 +1,7 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+bueno:
+  message: "Quiero unirme a la actividad"
+  status: "sent"
+  user: bueno3
+  actividad: bueno

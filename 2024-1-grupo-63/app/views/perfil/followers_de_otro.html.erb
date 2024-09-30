@@ -1,0 +1,29 @@
+
+<h1 class="title is-1">Seguidores de <%= @user_buscado.email %> </h1>
+
+<div class="card">
+  <% @followers.each do |follower| %>
+    <% foto = AdditionalTable.find_by(user_id: follower.id).picture%>
+    <%bio = AdditionalTable.find_by(user_id: follower.id).biografia%>
+    <%= link_to ver_perfil_path(follower.id), class: "card-content custom-link" do %>
+      <div class="card-content">
+        <div class="media">
+          <div class="media-left">
+            <figure class="image is-48x48">
+              <%= image_tag url_for(foto) if foto.present? %>
+            </figure>
+          </div>
+          <div class="media-content">
+            <p class="title is-4"><%= follower.email %></p>
+          </div>
+        </div>
+
+        <div class="content">
+          Bio: <%= bio %>
+          <br />
+          Seguido desde: <%= follower.created_at.strftime("%d %b %Y") %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+</div>

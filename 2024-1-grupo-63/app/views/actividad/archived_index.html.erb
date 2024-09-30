@@ -1,0 +1,59 @@
+<div>
+  <% if user_signed_in? %>
+    <%= link_to 'Crear Actividad', 'crear_actividad', class: 'button' %>
+    <%= link_to 'Ver actividades activas', actividad_index_path, class: 'button' %> <!-- Nuevo botón para regresar a las actividades activas -->
+  <% end %>
+</div>
+
+<br> <br>
+
+<form action="<%= archived_activities_path %>" method="GET">
+  <div class="field is-grouped">
+    <p class="control has-icons-left" style="margin-left: 10px;">
+      <input class="input" type="text" name="search" value="<%= params[:search] %>" placeholder="Buscar por título">
+      <span class="icon is-left">
+        <i class="fas fa-search" aria-hidden="true"></i>
+      </span>
+    </p>
+    <p class="control">
+      <button type="submit" class="button is-primary">Buscar</button>
+    </p>
+  </div>
+</form>
+
+<table class="table is-striped">
+  <thead>
+    <tr>
+      <th>Imágen</th>
+      <th>Nombre de la Actividad</th>
+      <th>Descripción</th>
+      <th>Usuarios</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @actividades.each do |actividad| %>
+      <tr>
+        <td>
+          <figure class="image is-128x128">
+            <% if actividad.url_imagen.attached? %>
+              <%= image_tag url_for(actividad.url_imagen), alt: "Imagen de la actividad" %>
+            <% else %>
+              <p>No hay imagen adjunta</p>
+            <% end %>
+          </figure>
+        </td>
+        <td><%= link_to actividad.titulo, actividad_path(actividad) %></td>
+        <td><%= actividad.descripcion %></td>
+        <td>
+          <% actividad.users.each do |usuario| %>
+            <%= usuario.email %>
+            <% if actividad.memberships.find_by(user_id: usuario.id).admin %>
+              <span class="has-text-primary">(Admin)</span>
+            <% end %>
+            <br>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

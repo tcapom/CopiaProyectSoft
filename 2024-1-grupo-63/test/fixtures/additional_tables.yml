@@ -1,0 +1,15 @@
+# test/fixtures/additional_tables.yml
+additional_table_bueno:
+  user: bueno
+  phone: "Agrega un número de téfono"
+  username: "Crea un nombre"
+  pronouns: "Agrega pronombres"
+  picture: "/assets/images/predeterminada.jpg"
+
+additional_table_mutuals1:
+  user: mutuals1
+  phone: "+569 12345678"
+  username: "El Mutual"
+  pronouns: "he/him"
+  picture: "/assets/images/predeterminada.jpg"
+

@@ -1,0 +1,28 @@
+<table class="table is-striped"> 
+<p class="title is-4 is-spaced">Solicitudes para unirse a <%= current_user.email %></p>
+<thead>
+<tr>
+    <th>Solicitante</th>
+    <th>Mensaje</th>
+    <th></th>
+</tr>
+</thead>
+
+<tr>
+<% @solicitudes.each do |solicitud| %>
+<td> 
+<%= solicitud.user.email%>
+</td>
+
+<td> 
+<%= solicitud.message %> 
+</td>
+
+<td>
+</td>
+
+</tr>
+<% end %>
+</td>
+</table>
+

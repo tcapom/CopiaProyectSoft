@@ -1,0 +1,229 @@
+<section class="hero is-info">
+  <div class="hero-body">
+    <p class="title"><%= @actividad.titulo %></p>
+    <p class="subtitle"><%= @admin.email %></p>
+    <p>Valor: <%= number_to_currency(@actividad.valor, unit: "$", delimiter: ".", precision: 0, format: "%n%u") %></p>
+    <p class="subtitle"> Rating: 
+      <% average_calificacion = @contador_calificaciones.to_f.zero? ? 0 : (@suma_calificaciones.to_f / @contador_calificaciones) %>
+      <%= average_calificacion.round(2) %>
+      <% stars_count = average_calificacion.round(0) %>
+      <% stars_count.to_i.times do %>
+        <span class="star">&#9733;</span>
+      <% end %>
+    </p>
+  </div>
+</section>
+
+<div class="imagen-actividad">
+  <% if @actividad.url_imagen.attached? %>
+    <%= image_tag url_for(@actividad.url_imagen), alt: "Imagen de la actividad" %>
+  <% else %>
+    <p>No hay imagen adjunta</p>
+  <% end %>
+</div>
+
+<p><strong>Descripción:</strong> <%= @actividad.descripcion %></p>
+<br><br>
+
+<% if current_user %>
+  <% if @actividad.archivado == false %>
+
+    <% if current_user.global_admin %>
+      <form action="<%= actividad_path(@actividad) %>" method="post" data-confirm="¿Estás seguro de que quieres eliminar esta actividad?" class="delete-form">
+        <input type="hidden" name="_method" value="delete">
+        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+        <button type="submit" class="button is-danger is-fullwidth">Eliminar actividad</button>
+      </form> <br>
+      
+      <form action="<%= archive_actividad_path(@actividad) %>" method="post" data-confirm="¿Estás seguro de que quieres archivar esta actividad?" class="archive-form">
+        <input type="hidden" name="_method" value="patch">
+        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+        <button type="submit" class="button is-warning is-fullwidth">Archivar actividad</button>
+      </form> <br>
+
+      <%= form_with(url: update_photo_actividad_path(@actividad), method: 'patch', local: true, multipart: true) do |form| %>
+        <div class="field">
+          <label class="label">Cambia la foto:</label>
+          <div class="control">
+            <div class="file has-name">
+              <label class="file-label">
+                <%= form.file_field 'actividad[url_imagen]', class: 'file-input' %>
+                <span class="file-cta">
+                  <span class="file-icon">
+                    <i class="fas fa-upload"></i>
+                  </span>
+                  <span class="file-label">Elige un archivo…</span>
+                </span>
+              </label>
+            </div>
+          </div>
+          <div class="control">
+            <button type="submit" class="button is-primary is-fullwidth">Actualizar foto</button>
+          </div>
+        </div>
+      <% end %>
+
+    <% elsif @actividad.memberships.exists?(user_id: current_user.id, admin: true) %>
+      <form action="<%= archive_actividad_path(@actividad) %>" method="post" data-confirm="¿Estás seguro de que quieres archivar esta actividad?" class="archive-form">
+        <input type="hidden" name="_method" value="patch">
+        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+        <button type="submit" class="button is-warning is-fullwidth">Archivar actividad</button>
+      </form> <br>
+      <form action="<%= ver_solicitudes_actividad_path %>" method="get">
+        <button type="submit" class="button is-fullwidth">Ver solicitudes</button>
+      </form> <br> 
+      <form action='<%= chat_room_actividad_path%>' method='get'>
+        <button type="submit" class="button is-fullwidth">Ver chat</button>
+      </form> <br>
+
+    <% elsif @actividad.memberships.exists?(user_id: current_user.id) %>
+      <% if @actividad.memberships.find_by(user_id: current_user.id).admin %>
+        <form action="<%= ver_solicitudes_actividad_path %>" method="get">
+          <button type="submit" class="button is-fullwidth">Ver solicitudes</button>
+        </form> <br>
+      <% end %>
+      <form action='<%= chat_room_actividad_path%>' method='get'>
+        <button type="submit" class="button is-fullwidth">Ver chat</button>
+      </form> <br>
+    <% else %>
+      <% if @actividad.solicituds.exists?(user_id: current_user.id) %>
+        Ya haz solicitado unirte a esta actividad
+      <% else %>
+        <form action="<%= nueva_solicitud_path %>" method="get">
+          <button type="submit" class="button is-fullwidth">Solicitar unirse</button>
+        </form> <br>
+      <% end %>
+    <% end %>
+    
+    <form action="<%= ver_miembros_path %>" method="get">
+      <button type="submit" class="button is-fullwidth">Ver miembros</button>
+    </form>
+
+  <% else %>
+
+    <% if current_user.global_admin %>
+      <form action="<%= actividad_path(@actividad) %>" method="post" data-confirm="¿Estás seguro de que quieres eliminar esta actividad?" class="delete-form">
+        <input type="hidden" name="_method" value="delete">
+        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+        <button type="submit" class="button is-danger is-fullwidth">Eliminar actividad</button>
+      </form> <br>
+
+    <% elsif @actividad.memberships.exists?(user_id: current_user.id, admin: true) %>
+      <form action='<%= chat_room_actividad_path%>' method='get'>
+        <button type="submit" class="button is-fullwidth">Ver chat</button>
+      </form> <br>
+
+    <% elsif @actividad.memberships.exists?(user_id: current_user.id) %>
+      <% if @actividad.memberships.find_by(user_id: current_user.id).admin %>
+        <form action="<%= ver_solicitudes_actividad_path %>" method="get">
+          <button type="submit" class="button is-fullwidth">Ver solicitudes</button>
+        </form> <br>
+      <% end %>
+      <form action='<%= chat_room_actividad_path%>' method='get'>
+        <button type="submit" class="button is-fullwidth">Ver chat</button>
+      </form> <br>
+    <% else %>
+      <% if @actividad.solicituds.exists?(user_id: current_user.id) %>
+        Ya haz solicitado unirte a esta actividad
+      <% else %>
+        <form action="<%= nueva_solicitud_path %>" method="get">
+          <button type="submit" class="button is-fullwidth">Solicitar unirse</button>
+        </form> <br>
+      <% end %>
+    <% end %>
+    
+    <form action="<%= ver_miembros_path %>" method="get">
+      <button type="submit" class="button is-fullwidth">Ver miembros</button>
+    </form>
+
+  <% end %>
+<% end %>
+
+
+
+
+
+
+<% if current_user %>
+  <% if @actividad.memberships.exists?(user_id: current_user.id) && @actividad.archivado == false %>
+    <%= form_with(model: [@actividad, @actividad.resenas.create], local: true) do |form| %>
+      <div class="field">
+        <label class="label">Califica esta actividad</label>
+        <div class="star-rating-container">
+          <div class="star-rating">
+            <%= form.radio_button :calificacion, 5, id: 'star5' %>
+            <label for="star5" title="5 estrellas">&#9733;</label>
+
+            <%= form.radio_button :calificacion, 4, id: 'star4' %>
+            <label for="star4" title="4 estrellas">&#9733;</label>
+
+            <%= form.radio_button :calificacion, 3, id: 'star3' %>
+            <label for="star3" title="3 estrellas">&#9733;</label>
+
+            <%= form.radio_button :calificacion, 2, id: 'star2' %>
+            <label for="star2" title="2 estrellas">&#9733;</label>
+
+            <%= form.radio_button :calificacion, 1, id: 'star1' %>
+            <label for="star1" title="1 estrella">&#9733;</label>
+          </div>
+        </div>
+        <br>
+        <div class="field">
+          <label class="label">Deja un comentario</label>
+          <div class="control">
+            <%= form.text_area :contenido, class: "textarea", placeholder: "¡Cuéntanos tu experiencia!", rows: 3 %>
+          </div>
+        </div>
+      </div>
+      <div class="actions">
+        <%= form.submit "Publicar" %>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>
+
+<% @resenas.each do |review| %>
+  <div class="box">
+    <article class="media">
+      <div class="media-left">
+        <figure class="image is-64x64">
+          <% if review.user.present? %>
+            <% foto = AdditionalTable.find_by(user_id: review.user.id).picture %>
+
+            <% username = AdditionalTable.find_by(user_id: review.user.id).username %>
+            <% if foto.attached? %>
+              <%= image_tag url_for(foto) %>
+            <% else %>
+              <p>No hay imagen adjunta</p>
+            <% end %>
+          <% end %>
+        </figure>
+      </div>
+      <div class="media-content">
+        <div class="content">
+        <% if review.user %>
+          <p>
+            <strong><%= review.user ? review.user.email : "Usuario no disponible" %></strong>
+            <br />
+            <% if review.user.present? %>
+              <small>@<%= username %></small>
+            <% end %>
+            <small><%= review.created_at ? review.created_at.strftime("%Y-%m-%d %H:%M:%S") : "Fecha y hora no disponibles" %></small>
+            <br />
+            <%= review.calificacion %>
+            <br />
+            <%= review.contenido %>
+          </p>
+        <% end %>
+        </div>
+      </div>
+      <% if current_user && review.user == current_user %>
+        <form action="<%= actividad_resena_path(@actividad, review) %>" method="post" data-confirm="¿Estás seguro de que quieres eliminar esta reseña?" class="delete-form">
+          <input type="hidden" name="_method" value="delete">
+          <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+          <button type="submit" class="button is-danger is-small">Eliminar</button>
+        </form>
+      <% end %>
+    </article>
+  </div>
+<% end %>

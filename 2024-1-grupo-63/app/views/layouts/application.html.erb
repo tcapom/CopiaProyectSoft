@@ -1,0 +1,160 @@
+<style>
+  .search-container {
+    margin: 10px; 
+  }
+  .search-input {
+    margin: 0;
+  }
+</style>
+<!DOCTYPE html>
+<html data-theme="light">
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DATE EL DATO</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= javascript_importmap_tags %>
+</head>
+<body>
+  <div class="yield_content">
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <!-- Aquí podría ir tu logotipo o marca -->
+      </div>
+      <img src="https://i.imgur.com/XtMkTKM.jpeg" style="max-width: 100px; height: auto;">
+      <div id="navbarBasicExample" class="navbar-menu">
+        
+        <div class="navbar-start">
+          <a class="navbar-item" href="<%= root_path %>">
+            Home
+          </a>
+          <a class="navbar-item" href="<%= actividad_index_path %>">
+            Actividades
+          </a>
+          <% if user_signed_in? %>
+            <a class="navbar-item" href="<%= ver_solicitudes_user_path %>">
+              Solicitudes
+            </a>
+            <a class="navbar-item" href="<%= ver_actividades_user_path %>">
+              Mis Actividades
+            </a>
+            <a class="navbar-item" href="<%= chat_rooms_index_path %>">
+              Chats
+            </a>
+            <a class="navbar-item" href="<%= usuarios_path %>">
+              Buscar usuarios
+            </a>
+          <% end %>
+        </div>
+
+        <div class="navbar-end">
+          <% if user_signed_in? %>
+            <div class="buttons">
+              <a class="button is-light" href="<%= destroy_user_session_path %>">
+                <strong>Cerrar sesión</strong>
+              </a>
+              <a></a>
+            </div>
+          <% else %>
+            <div class="navbar-item">
+              <div class="buttons">
+                <a class="button is-primary" href="<%= new_user_registration_path %>">
+                  <strong>Registrarse</strong>
+                </a>
+                <a class="button is-light" href="<%= new_user_session_path %>">
+                  Ingresar
+                </a>
+              </div>
+            </div>
+          <% end %>
+        </div>
+
+      </div>
+    </nav>
+
+    <!-- Barra horizontal de separación -->
+    <div class="separator-bar"></div>
+
+    <%= flash[:notice] %>
+    <%= flash[:alert] %>
+    <br>
+
+    <% if current_user && current_user.global_admin %>
+      <p> MODO ADMINISITRADOR </p>
+    <% end %>
+    <br>
+
+    <%= yield %>
+  </div>
+
+    <% if current_page?(root_path) %>
+      <!-- Contenido adicional antes del pie de página -->
+      <div class="additional-content">
+      <!DOCTYPE html>
+      <html data-theme="light">
+      <html lang="es">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Bienvenido a **DAT**E EL **DAT**O</title>
+        <style>
+          body {
+            font-family: Arial, sans-serif; /* Fuente de texto */
+            margin: 0; /* Elimina márgenes predeterminados del body */
+          }
+      
+          .content {
+            max-width: 800px; /* Ancho máximo del contenido */
+            margin: 0 auto; /* Centra horizontalmente el contenido */
+            padding: 20px; /* Espaciado interior para mejor legibilidad */
+            text-align: justify; /* Alineación justificada del texto */
+          }
+      
+          .content img {
+            display: block; /* Para asegurar que la imagen respete los márgenes automáticos */
+            margin: 0 auto; /* Centra la imagen horizontalmente */
+            max-width: 100%; /* Para asegurar que la imagen no se desborde del contenedor */
+            height: auto; /* Ajusta automáticamente la altura en proporción al ancho */
+          }
+        </style>
+      </head>
+      <body>
+        <div class="content">
+          <img src="https://i.imgur.com/XtMkTKM.jpeg" alt="Logo" style="max-width: 500px; height: auto;">
+          <h1>Hola!</h1>
+          <p>
+          Bienvenidos a nuestra página web :). DATE EL DATO es un lugar seguro en donde puedes enterarte de todas las actividades que están a tu alcance. Aquí puedes ver dónde, cuándo, de qué tratan y cuál es el valor de las actividades que más te llamen la atención, y si es que quieres ir a una puedes solicitar unirte para atender! <br><br>
+          También puedes ser el host de una actividad si así lo quieres, sólo debes rellenar la información necesaria y crearla. Una vez realizada, todos los usuarios que fueron parte pueden dejar sus comentarios y opiniones, así puedes ir ganando popularidad y atraer a aún más personas en una siguiente oportunidad. Puedes encontrar desde eventos orientados a públicos grandes, hasta pequeñas reuniones de fanclubs para escuchar la música que los conecta. <br><br>
+          
+          Puedes partir creando una cuenta, sólo necesitas un email y crear una contraseña segura. Una vez registrado, puedes personalizar tu perfil haciendo click en tu foto del inicio, y luego debes ir a "Editar perfil". Puedes notar que puedes ver cuántas actividades has sido parte y cuántas personas te siguen, al hacker click en "Seguidores" puedes ver quienes son e ir a sus perfiles para seguirlos de vuelta! <br><br>
+          Puedes ver quienes son parte de nuestra comunidad al hacer click en "Buscar usuarios", aquí podrás encontrar a todos e ir a sus perfiles. Puedes además ponerte en contacto con quien tu quieras a través de Chats, si presionas el botón con ese nombre podrpas crear nuevos espacios para conversar con quien tú desees.<br><br>
+          
+          En un principio puede que te sientas un poco perdido con respecto a qué actividades hay, si haces click en "Actividades" podrás ver todas las disponibles, y si haces click en una de ellas puedes solicitar unirte. Una vez el creador te acepte, podrás dejar tu comentario y chatear con otros participantes para conocerse! <br><br>
+          
+          Una vez siendo parte de alguna actividad, en "Home" puedes ver la última review hecha, dándote a saber cuál fueron las últimas experiencias de otras personas. Si quieres crear una, sólo anda a "Actividades" y haz click en "Crear actividad". Una vez hayas hecho esto, sólo debes esperar a que gente solicite unirse, puedes ver quiénes son al ir a "Solicitudes", y puedes aceptar o rechazar la solicitud. Tienes control total sobre tu actividad, si es que alguien está siendo hostil, o simplemente no quieres a esa persona presente, puedes eliminarla y no preocuparte más. Para lograr esto sólo debes ir a la página de tu actividad y hacer click en "Ver miembros", te aparecerá una lista con todos los miembros y a su lado el botón "Eliminar".<br><br>
+          Si es que algo ocurre y no puedes hacer la actividad puedes retirarla, sólo debes hacer click en el botón "Archivar actividad" en la página de esta. De esta forma la actividad a no apoarecerá en "Actividades" y las personas no podrán verla para unirse.
+          <br><br>
+          Si ya no quieres ser parte de nuestra comunidad, no hay ataduras! Puedes eliminar tu perfil y todo lo asocido a él al ir a tu perfil y hacer click en "Eliminar cuenta".
+          <br><br>
+          Esperamos que DATE EL DATO sea el lugar indicado para ti. Bienvenido!
+          </p>
+        </div>
+      </body>
+      </html>
+      </div>
+    <% end %>
+    </body>
+  
+    <footer class="footer">
+      <div class="separator-bar"></div>
+      <p>Creado por: <br> Tomás Capó <br> Danilo Córdova <br> Antonio Venegas</p>
+    </footer>
+</html>
+
+
+
+
+

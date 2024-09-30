@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+mutuals1a2:
+  follower_id: mutuals1
+  followed_id: mutuals2
+
+mutuals2a1:
+  follower_id: mutuals2
+  followed_id: mutuals1
+
+buenoamutual1:
+  follower_id: bueno
+  followed_id: mutuals1

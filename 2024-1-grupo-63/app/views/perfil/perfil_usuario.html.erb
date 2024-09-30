@@ -1,0 +1,69 @@
+<br>
+<% foto = AdditionalTable.find_by(user_id: current_user.id).picture%>
+<%mail =current_user.email%>
+<%name = AdditionalTable.find_by(user_id: current_user.id).username%>
+<%bioo = AdditionalTable.find_by(user_id: current_user.id).biografia%>
+<%celular = AdditionalTable.find_by(user_id: current_user.id).phone%>
+<%pron = AdditionalTable.find_by(user_id: current_user.id).pronouns%>
+<%big_p= AdditionalTable.find_by(user_id: current_user.id).big_picture%>
+
+
+<div class="card">
+  <div class="card-image">
+    
+    <figure class="image is-4by3">
+      <%= image_tag url_for(foto), alt: "Imagen de la actividad" if foto.attached? %>
+    </figure>
+  </div>
+  <div class="card-content">
+    <div class="media">
+      <div class="media-left">
+      <figure class="image is-48x48">
+      <%= image_tag url_for(foto), alt: "Imagen de la actividad" if foto.attached? %>
+    </figure>
+      </div>
+            
+      <div class="media-content">
+        <p class="title is-4"><%=name%></p>
+        <p class="subtitle is-6"><%=pron%></p>
+      </div>
+      <div class="media-content">
+      <nav class="level">
+      <div class="level-item has-text-centered">
+        <div>
+          <p class="heading">Actividades</p>
+          <p class="title"><%=current_user.actividads.count %></p>
+        </div>
+      </div>
+
+      <div class="level-item has-text-centered">
+      <div>
+        <p class="heading">
+          <%= link_to 'Followers', followers_path %>
+        </p>
+        <p class="title"><%= current_user.followers.count %></p>
+      </div>
+    </div>
+      
+    </nav>
+    </div>
+    </div>
+    <div class="buttons">
+      <a href="agregar_info">
+        <button class="button is-warning is-light">Editar información</button>
+      </a>
+      <%= button_to "Eliminar cuenta", destroy_user_path(current_user), method: :delete, data: { confirm: "Are you sure you want to delete your account? This action cannot be undone." }, class: "button is-danger is-light" %>
+      
+    </div>
+    <br>
+    <div class="content">
+        <%=bioo%><br>
+        <%=celular%><br>
+
+    </div>
+  </div>
+</div>
+
+
+
+

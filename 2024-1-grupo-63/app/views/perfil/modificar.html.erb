@@ -1,0 +1,34 @@
+
+
+<form class="box">
+  <div class="box"><%= current_user.email %></div>
+
+  <div class="field">
+    <label class="label">Password</label>
+    <div class="control">
+      <input class="input" type="password" placeholder="********" />
+    </div>
+  </div>
+  <%= link_to "Change password", edit_user_registration_path %>
+
+
+  <div class="field">
+    <label class="label">Birthday</label>
+    <div class="control">
+      <input class="input" type="text" id="datepicker" placeholder="DD/MM/AAAA" />
+    </div>
+  </div>
+
+  <div class="field">
+  <label class="label">Pronouns</label>
+  <div class="control">
+    <input class="input" type="text" placeholder="he/him she/her they/them" />
+  </div>
+</div>
+
+
+
+
+
+
+

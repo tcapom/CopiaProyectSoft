@@ -1,0 +1,47 @@
+<table class="table is-striped"> 
+<p class="title is-4 is-spaced">Solicitudes para unirse a <%= @actividad.titulo%></p>
+<thead>
+<tr>
+    <th>Solicitante</th>
+    <th>Mensaje</th>
+    <th></th>
+</tr>
+</thead>
+
+<tr>
+<% @solicitudes.each do |solicitud| %>
+<td> 
+<%= solicitud.user.email%>
+</td>
+
+<td> 
+<%= solicitud.message %> 
+</td>
+
+<td>
+<table>
+<tr>
+<td>
+<form action=ver_solicitudes_actividad method="delete">
+<button class="button is-primary" type="submit" name="solicitud_id" value=<%=solicitud.id%>> ACEPTAR </button>
+<input type="hidden" name="accepted" value=true>
+</form>
+</td>
+
+<td>
+<form action=ver_solicitudes_actividad method="delete" data-turbolinks="false">
+<button class="button is-danger" type="submit" name="solicitud_id" value=<%=solicitud.id%>> RECHAZAR </button>
+<input type="hidden" name="accepted" value=false>
+</form>
+</td>
+</tr>
+</table>
+</td>
+
+</tr>
+<% end %>
+</td>
+</table>
+<%= link_to "Volver a actividad", actividad_path(@actividad), class: 'button'%>
+
+

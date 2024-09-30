@@ -1,0 +1,5 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+uno:
+  chat_room_actividad_id: bueno
+  user_id: bueno

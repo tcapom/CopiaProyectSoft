@@ -1,0 +1,33 @@
+<table class="table is-striped">
+
+<p class="title is-4 is-spaced">Actividades de <%= @usuario.email %> </p>
+<thead>
+<tr>
+    <th>Imagen</th>
+    <th>Título</th>
+    <th>Descripción</th>
+</tr>
+</thead>
+
+<tr>
+
+<% @actividades_user.each do |actividad|%>
+
+<td class="image is-128x128">
+<% if actividad.url_imagen.attached? %>
+      <%= image_tag url_for(actividad.url_imagen), alt: "Imagen de la actividad" %>
+    <% else %>
+      <p>No hay imagen adjunta</p>
+    <% end %>
+ </td>
+<td>
+<%= link_to actividad.titulo, actividad_path(actividad) %>
+</td>
+
+<td>
+<%= actividad.descripcion %>
+</td>
+
+</tr>
+<% end %>
+</table>

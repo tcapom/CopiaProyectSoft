@@ -1,0 +1,97 @@
+<div class="fixed-grid has-3-cols">
+  <div class="grid">
+    <div class="cell is-col-start-1" style="text-align: center;">
+      <% if user_signed_in? %>
+      <div class="columns">
+        <!-- Columna Izquierda: Perfil -->
+        <div class="column is-6" style="border-right: 1px solid #ddd; padding-right: 50px;">
+          <h4 class="title is-4"><%= current_user.email %></h4>
+          
+        
+          <% foto = AdditionalTable.find_by(user_id: current_user.id).picture %>
+          <div style="display: flex; justify-content: center; align-items: center;">
+            <figure class="image is-128x128" style="display: flex; justify-content: center; align-items: center;">
+              <a href="/perfil">
+                <% if foto.attached? %>
+                <%= image_tag foto, class: "is-rounded" %>
+                <% else %>
+                <p>No hay imagen adjunta</p>
+                <% end %>
+              </a>
+            </figure>
+          </div>
+          <h1 class="mid-title">Haz click en tu foto para editar tu perfil</h1>
+        </div>
+
+        <!-- Columna Derecha: Contenido -->
+        <div class="column is-6" style="padding-left: 30px; flex: 1;"> <!-- Se agregó flex: 1 para que el contenido se expanda -->
+          <% usuario = current_user %>
+          <% actividades_user = usuario.actividads %>
+          <% if actividades_user.present? %>
+          <div style="width: 300px;"> <!-- Establece el ancho fijo para el contenedor -->
+            <h2 class="title is-6">Mira los últimos comentarios</h2>
+          </div>
+
+            <% actividades_user.each do |actividad| %>
+             
+              <% if actividad.resenas.any? %> <!-- Verifica si hay reseñas para esta actividad -->
+                <% review = actividad.resenas.last %>
+               
+                <div class="box" style="width: 300%;"> 
+                  <article class="media">
+                    <div class="media-left">
+                      <figure class="image is-64x64">
+                        <% if review.user.present? %>
+                          <% foto = AdditionalTable.find_by(user_id: review.user.id).picture %>
+
+                          <% username = AdditionalTable.find_by(user_id: review.user.id).username %>
+                          <% if actividad.url_imagen.attached? %>
+                            <%= image_tag (actividad.url_imagen), alt: "Imagen de la actividad" %>
+                             <p> <%= actividad.titulo %> </p>
+                          <% else %>
+                            <p>No hay imagen adjunta</p>
+                          
+                          
+                          <% end %>
+                        <% end %>
+                      </figure>
+                    </div>
+                    <div class="media-content">
+                      <div class="content">
+                        <p>
+                          <strong><%= review.user ? review.user.email : "Usuario no disponible" %></strong>
+                          <br />
+                          
+                          <small><%= review.created_at ? review.created_at.strftime("%Y-%m-%d %H:%M:%S") : "Fecha y hora no disponibles" %></small>
+                          <br />
+                          
+                          <% review.calificacion.to_i.times do %>
+                            <span class="star">&#9733;</span>
+                          <% end %>
+                          <br />
+                          <%= review.contenido %>
+                        </p>
+                      </div>
+                    </div>
+                    <% if current_user && review.user == current_user %>
+                      <form action="<%= actividad_resena_path(actividad, review) %>" method="post" data-confirm="¿Estás seguro de que quieres eliminar esta reseña?" class="delete-form">
+                        <input type="hidden" name="_method" value="delete">
+                        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+                        <button type="submit" class="button is-danger is-small">Eliminar</button>
+                      </form>
+                    <% end %>
+                  </article>
+                </div>
+              <% else %>
+                <p> </p>
+              <% end %>
+            <% end %>
+          <% else %>
+            <p>No hay actividades para mostrar.</p>
+          <% end %>
+        </div>
+
+      <% end %>
+    </div>
+  </div>
+</div>
